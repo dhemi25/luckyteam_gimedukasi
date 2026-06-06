@@ -21,6 +21,7 @@ public class PlayerContrrollerAdventure : MonoBehaviour
     //mengambil canvas
     public GameObject canvasInteract;
 
+    
 
     // Fungsi Start dijalankan sekali saat game mulai
     void Start()
@@ -75,10 +76,13 @@ public class PlayerContrrollerAdventure : MonoBehaviour
         // Biasanya digunakan untuk efek visual (misalnya ikon berputar)
         objInfoInteract.transform.Rotate(0f, 120f * Time.deltaTime, 0f);
 
-        if (onInteractArea && Input.GetKeyDown(KeyCode.E))
+        if (onInteractArea==true && Input.GetKeyDown(KeyCode.E))
         {
             canvasInteract.SetActive(true);
             Debug.Log("E ditekan di area interaksi!");
+            
+            
+
         }
     }
 
