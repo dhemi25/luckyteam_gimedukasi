@@ -21,7 +21,9 @@ public class PlayerContrrollerAdventure : MonoBehaviour
     //mengambil canvas
     public GameObject canvasInteract;
 
-    
+    public Animator playerAnimator; // drag dari Inspector
+
+    public bool can_move;
 
     // Fungsi Start dijalankan sekali saat game mulai
     void Start()
@@ -41,6 +43,7 @@ public class PlayerContrrollerAdventure : MonoBehaviour
     // Fungsi Update dijalankan setiap frame
     void Update()
     {
+        if (!can_move) return;
         // Mengambil input horizontal (A/D atau panah kiri/kanan)
         float h = Input.GetAxis("Horizontal");
 
@@ -65,13 +68,17 @@ public class PlayerContrrollerAdventure : MonoBehaviour
         controller.Move(moveDirection.normalized * speed * Time.deltaTime);
 
         // Jika ada input gerakan (player bergerak)
-        if (moveDirection != Vector3.zero)
+        if (moveDirection != Vector3.zero ) //&& canvasInteract.activeSelf == false
         {
             // Mengubah arah hadap player mengikuti arah gerakan
             transform.forward = moveDirection;
-
+            playerAnimator.enabled = true;
         }
-
+        else
+        {
+            playerAnimator.enabled = false; //mematikan animator
+        }
+            
         // Memutar objek interaksi terus-menerus di sumbu Y
         // Biasanya digunakan untuk efek visual (misalnya ikon berputar)
         objInfoInteract.transform.Rotate(0f, 120f * Time.deltaTime, 0f);
@@ -80,8 +87,8 @@ public class PlayerContrrollerAdventure : MonoBehaviour
         {
             canvasInteract.SetActive(true);
             Debug.Log("E ditekan di area interaksi!");
-            
-            
+
+            can_move = false;
 
         }
     }

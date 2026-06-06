@@ -18,12 +18,14 @@ public class CameraController : MonoBehaviour
     // Rotasi vertical (atas/bawah), default sedikit melihat ke bawah
     float pitch = 20f;
 
-
+    public PlayerContrrollerAdventure player;
 
     // LateUpdate dipanggil setelah semua Update selesai
     // Cocok untuk kamera agar mengikuti object dengan lebih smooth
     void LateUpdate()
     {
+
+        if (!player.can_move) return;
         // Mengubah yaw (rotasi horizontal) berdasarkan pergerakan mouse X
         yaw += Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
 
