@@ -1,38 +1,33 @@
 using UnityEngine;
 
-// Class untuk mendeteksi area interaksi menggunakan trigger collider
 public class Interact : MonoBehaviour
 {
-    // Referensi ke script PlayerContrrollerAdventure
-    // Digunakan untuk mengubah status interaksi pada player
     public PlayerContrrollerAdventure player;
 
-    // Awake dipanggil saat object pertama kali diinisialisasi (sebelum Start)
+    // Penanda agar objek tidak dihitung / disentuh dua kali
+    [HideInInspector] public bool sudahSelesai = false;
+
     private void Awake()
     {
-        // Saat game mulai, pastikan player TIDAK berada di area interaksi
-        // Jadi UI interaksi dimatikan terlebih dahulu
-        player.SetOnInteractionArea(false);
-
+        player.SetOnInteractionArea(false, null);
     }
 
-
-    // Dipanggil saat collider lain masuk ke trigger area object ini
     private void OnTriggerEnter(Collider other)
     {
-        // Saat ada object masuk ke area trigger,
-        // player dianggap berada di area interaksi
-        // Biasanya digunakan untuk menampilkan UI (misalnya "Press E")
-        player.SetOnInteractionArea(true);
+        // TAMBAHAN: Jika sudah selesai, abaikan trigger ini sama sekali
+        if (sudahSelesai) return;
+
+        if (other.CompareTag("Player"))
+        {
+            player.SetOnInteractionArea(true, this);
+        }
     }
 
-    // Dipanggil saat collider keluar dari trigger area
     private void OnTriggerExit(Collider other)
     {
-        // Saat object keluar dari area trigger,
-        // player dianggap tidak lagi bisa berinteraksi
-        // UI interaksi akan disembunyikan
-        player.SetOnInteractionArea(false);
-
+        if (other.CompareTag("Player"))
+        {
+            player.SetOnInteractionArea(false, null);
+        }
     }
 }
