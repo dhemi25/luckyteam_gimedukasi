@@ -865,6 +865,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Interact
   player: {fileID: 943060955}
+  tipeObjek: 0
+  namaObjek: Nama Objek
+  halamanMateri: []
   sudahSelesai: 0
 --- !u!65 &326895291
 BoxCollider:
@@ -1702,10 +1705,14 @@ MonoBehaviour:
   cameraTransform: {fileID: 1503089422}
   objekInteraksiSaatIni: {fileID: 0}
   objInfoInteract: {fileID: 1722895306}
-  canvasInteract: {fileID: 151124433}
+  txt_namaObjek: {fileID: 0}
+  txt_peringatan: {fileID: 0}
+  canvasSoal: {fileID: 0}
+  uiSoal: {fileID: 151124438}
+  canvasMateri: {fileID: 0}
+  uiMateri: {fileID: 0}
   playerAnimator: {fileID: 520809709}
   can_move: 1
-  uiSoal: {fileID: 151124438}
 --- !u!143 &943060956
 CharacterController:
   m_ObjectHideFlags: 0
@@ -3799,7 +3806,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 069311dfa409d864f917a8275c7d03f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  totalObjekDiLevel: 1
+  totalMateriDiLevel: 2
+  totalSoalDiLevel: 3
   txt_skorGlobal: {fileID: 1053313065}
   canvasLevelSelesai: {fileID: 0}
 --- !u!4 &2138274645
