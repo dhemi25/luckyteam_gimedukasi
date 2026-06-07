@@ -14,7 +14,10 @@ public class GameManager : MonoBehaviour
 
     [Header("UI Global")]
     public TextMeshProUGUI txt_skorGlobal;
-    public GameObject canvasLevelSelesai;
+
+    [Header("Pengaturan Perpindahan Scene")]
+    public ScreenChanger screenChanger;     // Taruh GameObject yang punya skrip ScreenChanger di sini
+    public string namaSceneBerikutnya;     // Ketik nama scene tujuan di Inspector
 
     private void Awake()
     {
@@ -24,7 +27,6 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        if (canvasLevelSelesai != null) canvasLevelSelesai.SetActive(false);
         UpdateUI();
     }
 
@@ -66,10 +68,16 @@ public class GameManager : MonoBehaviour
 
     void LevelSelesai()
     {
-        Debug.Log("Semua soal selesai! Membuka gerbang / tombol Next Level.");
-        if (canvasLevelSelesai != null)
+        Debug.Log("Semua soal selesai! Memanggil ScreenChanger untuk pindah halaman.");
+
+        // Memastikan ScreenChanger dan Nama Scene sudah diatur di Inspector
+        if (screenChanger != null && !string.IsNullOrEmpty(namaSceneBerikutnya))
         {
-            canvasLevelSelesai.SetActive(true);
+            screenChanger.PindahKeScene(namaSceneBerikutnya);
+        }
+        else
+        {
+            Debug.LogError("Gagal pindah scene! Pastikan 'Screen Changer' dan 'Nama Scene Berikutnya' sudah diisi di Inspector GameManager.");
         }
     }
 }

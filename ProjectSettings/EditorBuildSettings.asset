@@ -9,14 +9,29 @@ EditorBuildSettings:
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
+    path: Assets/Scenes/fikx_splash_scene.unity
+    guid: 2360e313b8c41f142a62aecbeff2c0c5
+  - enabled: 1
+    path: Assets/Scenes/fikx_menu.unity
+    guid: c723e9ab46f870e48940440242d915c3
+  - enabled: 1
+    path: Assets/Scenes/fikx_player.unity
+    guid: 51d21365e4749b34980b1812c3451a20
+  - enabled: 0
     path: Assets/Scenes/menuatik.unity
     guid: 8a30f8c7dd45f4b4ba5f2223da7156ac
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/kelasatik.unity
     guid: 0aa156b5b906ab64fbed4c2f5d66a373
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Player.unity
     guid: 64953d3795551714599c251452923b0c
+  - enabled: 1
+    path: Assets/Scenes/fikx_win.unity
+    guid: 7d020b25eb738164e831d4efe29c1686
+  - enabled: 1
+    path: Assets/Scenes/fikx_how_to_play.unity
+    guid: f643d01c986fe104f9c55799a23076cb
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0
