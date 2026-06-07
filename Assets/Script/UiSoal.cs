@@ -101,7 +101,7 @@ public class UiSoal : MonoBehaviour
 
                 if (GameManager.instance != null)
                 {
-                    GameManager.instance.TambahObjekSelesai();
+                    GameManager.instance.TambahSoalSelesai(); // <- Diubah ke fungsi baru
                 }
 
                 // Hancurkan objek 3D

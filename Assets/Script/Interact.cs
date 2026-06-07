@@ -1,23 +1,29 @@
 using UnityEngine;
 
+public enum TipeInteract { Soal, Materi }
+
 public class Interact : MonoBehaviour
 {
     public PlayerContrrollerAdventure player;
 
-    // Penanda agar objek tidak dihitung / disentuh dua kali
+    [Header("Pengaturan Objek")]
+    public TipeInteract tipeObjek;
+    public string namaObjek = "Nama Objek";
+
+    [Header("Khusus Tipe Materi")]
+    [Tooltip("Masukkan gambar-gambar materi khusus untuk objek ini saja")]
+    public Sprite[] halamanMateri; // <-- SEKARANG GAMBAR DISIMPAN DI SINI
+
     [HideInInspector] public bool sudahSelesai = false;
 
     private void Awake()
     {
-        player.SetOnInteractionArea(false, null);
+        if (player != null) player.SetOnInteractionArea(false, null);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        // TAMBAHAN: Jika sudah selesai, abaikan trigger ini sama sekali
-        if (sudahSelesai) return;
-
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && player != null)
         {
             player.SetOnInteractionArea(true, this);
         }
@@ -25,7 +31,7 @@ public class Interact : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && player != null)
         {
             player.SetOnInteractionArea(false, null);
         }

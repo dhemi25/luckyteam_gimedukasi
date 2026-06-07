@@ -1,58 +1,72 @@
 using UnityEngine;
-using TMPro; // Untuk teks UI
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
-    // Singleton agar mudah diakses dari script mana saja tanpa perlu drag-and-drop
     public static GameManager instance;
 
-    [Header("Pengaturan Level")]
-    public int totalObjekDiLevel = 3; // Isi di inspector, berapa total objek yang harus dijawab
-    private int objekSelesai = 0; // Menghitung berapa objek yang sudah dijawab benar semua
+    [Header("Pengaturan Syarat Level")]
+    public int totalMateriDiLevel = 2; // Berapa materi yang harus dibaca sebelum soal terbuka?
+    public int totalSoalDiLevel = 3;   // Berapa soal yang harus dijawab?
+
+    private int materiSelesai = 0;
+    private int soalSelesai = 0;
 
     [Header("UI Global")]
-    public TextMeshProUGUI txt_skorGlobal; // Teks untuk "Task Selesai: 0 / 3"
-    public GameObject canvasLevelSelesai; // Canvas yang berisi tombol Next Level / Main Menu
+    public TextMeshProUGUI txt_skorGlobal;
+    public GameObject canvasLevelSelesai;
 
     private void Awake()
     {
-        // Setup Singleton
         if (instance == null) instance = this;
         else Destroy(gameObject);
     }
 
     private void Start()
     {
-        // Pastikan canvas kemenangan mati saat game dimulai
         if (canvasLevelSelesai != null) canvasLevelSelesai.SetActive(false);
         UpdateUI();
     }
 
-    // Fungsi ini akan dipanggil oleh UiSoal ketika pemain menjawab benar semua di satu objek
-    public void TambahObjekSelesai()
+    // Dipanggil oleh UiMateri saat materi BARU selesai dibaca
+    public void TambahMateriSelesai()
     {
-        objekSelesai++;
+        materiSelesai++;
+        UpdateUI();
+    }
+
+    // Dipanggil oleh UiSoal saat soal dijawab benar semua
+    public void TambahSoalSelesai()
+    {
+        soalSelesai++;
         UpdateUI();
 
-        // Cek apakah semua objek sudah diselesaikan
-        if (objekSelesai >= totalObjekDiLevel)
+        if (soalSelesai >= totalSoalDiLevel)
         {
             LevelSelesai();
         }
+    }
+
+    // Fungsi untuk mengecek apakah pemain sudah boleh membuka Soal
+    public bool ApakahMateriSudahCukup()
+    {
+        return materiSelesai >= totalMateriDiLevel;
     }
 
     void UpdateUI()
     {
         if (txt_skorGlobal != null)
         {
-            txt_skorGlobal.text = "Task Selesai: " + objekSelesai + " / " + totalObjekDiLevel;
+            // Menampilkan gabungan skor Materi dan Soal
+            int totalSkor = materiSelesai + soalSelesai;
+            int totalTarget = totalMateriDiLevel + totalSoalDiLevel;
+            txt_skorGlobal.text = "Progres: " + totalSkor + " / " + totalTarget;
         }
     }
 
     void LevelSelesai()
     {
-        Debug.Log("Semua task selesai! Membuka gerbang / tombol Next Level.");
-        // Munculkan Canvas yang berisi tombol Next Level atau Exit
+        Debug.Log("Semua soal selesai! Membuka gerbang / tombol Next Level.");
         if (canvasLevelSelesai != null)
         {
             canvasLevelSelesai.SetActive(true);
