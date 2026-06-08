@@ -67,6 +67,7 @@ MonoBehaviour:
       - rid: 4137260133443174497
     m_RuntimeSettings:
       m_List:
+<<<<<<< HEAD:Assets/UniversalRenderPipelineGlobalSettings.asset
       - rid: 4137260133443174467
       - rid: 4137260133443174468
       - rid: 4137260133443174470
@@ -82,6 +83,25 @@ MonoBehaviour:
       - rid: 4137260133443174491
       - rid: 4137260133443174492
   m_AssetVersion: 9
+=======
+      - rid: 6852985685364965378
+      - rid: 6852985685364965379
+      - rid: 6852985685364965380
+      - rid: 6852985685364965381
+      - rid: 6852985685364965384
+      - rid: 6852985685364965385
+      - rid: 6852985685364965392
+      - rid: 6852985685364965394
+      - rid: 8712630790384254976
+      - rid: 4361673686480846849
+      - rid: 4361673686480846850
+      - rid: 4361673686480846853
+      - rid: 4361673686480846855
+      - rid: 4361673686480846857
+      - rid: 4361673686480846859
+      - rid: 7239075843040346171
+  m_AssetVersion: 10
+>>>>>>> e1c597b385a0a990c7ac57018d39f6dc842ad35e:Assets/Settings/UniversalRenderPipelineGlobalSettings.asset
   m_ObsoleteDefaultVolumeProfile: {fileID: 0}
   m_RenderingLayerNames:
   - Default
@@ -104,7 +124,11 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
+<<<<<<< HEAD:Assets/UniversalRenderPipelineGlobalSettings.asset
     - rid: 4137260133443174466
+=======
+    - rid: 4361673686480846848
+>>>>>>> e1c597b385a0a990c7ac57018d39f6dc842ad35e:Assets/Settings/UniversalRenderPipelineGlobalSettings.asset
       type: {class: RayTracingRenderPipelineResources, ns: UnityEngine.Rendering.UnifiedRayTracing, asm: Unity.UnifiedRayTracing.Runtime}
       data:
         m_Version: 1
