@@ -6,8 +6,8 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
 
     [Header("Pengaturan Syarat Level")]
-    public int totalMateriDiLevel = 2; // Berapa materi yang harus dibaca sebelum soal terbuka?
-    public int totalSoalDiLevel = 3;   // Berapa soal yang harus dijawab?
+    public int totalMateriDiLevel = 2;
+    public int totalSoalDiLevel = 3;
 
     private int materiSelesai = 0;
     private int soalSelesai = 0;
@@ -16,8 +16,9 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI txt_skorGlobal;
 
     [Header("Pengaturan Perpindahan Scene")]
-    public ScreenChanger screenChanger;     // Taruh GameObject yang punya skrip ScreenChanger di sini
-    public string namaSceneBerikutnya;     // Ketik nama scene tujuan di Inspector
+    public ScreenChanger screenChanger;
+    public string namaSceneBerikutnya; // Scene Win
+    public string namaSceneKalah;      // <-- TAMBAHAN: Ketik nama scene Lose di Inspector
 
     private void Awake()
     {
@@ -30,14 +31,12 @@ public class GameManager : MonoBehaviour
         UpdateUI();
     }
 
-    // Dipanggil oleh UiMateri saat materi BARU selesai dibaca
     public void TambahMateriSelesai()
     {
         materiSelesai++;
         UpdateUI();
     }
 
-    // Dipanggil oleh UiSoal saat soal dijawab benar semua
     public void TambahSoalSelesai()
     {
         soalSelesai++;
@@ -45,11 +44,10 @@ public class GameManager : MonoBehaviour
 
         if (soalSelesai >= totalSoalDiLevel)
         {
-            LevelSelesai();
+            LevelSelesai(); // Memanggil WIN
         }
     }
 
-    // Fungsi untuk mengecek apakah pemain sudah boleh membuka Soal
     public bool ApakahMateriSudahCukup()
     {
         return materiSelesai >= totalMateriDiLevel;
@@ -59,7 +57,6 @@ public class GameManager : MonoBehaviour
     {
         if (txt_skorGlobal != null)
         {
-            // Menampilkan gabungan skor Materi dan Soal
             int totalSkor = materiSelesai + soalSelesai;
             int totalTarget = totalMateriDiLevel + totalSoalDiLevel;
             txt_skorGlobal.text = "Progres: " + totalSkor + " / " + totalTarget;
@@ -68,16 +65,30 @@ public class GameManager : MonoBehaviour
 
     void LevelSelesai()
     {
-        Debug.Log("Semua soal selesai! Memanggil ScreenChanger untuk pindah halaman.");
+        Debug.Log("Semua soal selesai! Pindah ke scene Win.");
 
-        // Memastikan ScreenChanger dan Nama Scene sudah diatur di Inspector
         if (screenChanger != null && !string.IsNullOrEmpty(namaSceneBerikutnya))
         {
             screenChanger.PindahKeScene(namaSceneBerikutnya);
         }
         else
         {
-            Debug.LogError("Gagal pindah scene! Pastikan 'Screen Changer' dan 'Nama Scene Berikutnya' sudah diisi di Inspector GameManager.");
+            Debug.LogError("Gagal pindah scene Win!");
+        }
+    }
+
+    // <-- TAMBAHAN: Fungsi untuk memanggil scene LOSE
+    public void LevelKalah()
+    {
+        Debug.Log("Gagal memenuhi syarat minimum soal! Pindah ke scene Lose.");
+
+        if (screenChanger != null && !string.IsNullOrEmpty(namaSceneKalah))
+        {
+            screenChanger.PindahKeScene(namaSceneKalah);
+        }
+        else
+        {
+            Debug.LogError("Gagal pindah scene Lose! Pastikan 'Nama Scene Kalah' sudah diisi di GameManager.");
         }
     }
 }

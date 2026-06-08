@@ -444,6 +444,7 @@ MonoBehaviour:
     - 2
     - 3
     indexJawabanBenar: 0
+  minimalBenarUntukLulus: 2
 --- !u!1001 &164709368
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1042,7 +1043,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 323, y: -69.43381}
+  m_AnchoredPosition: {x: 418, y: -248}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &324533282
@@ -2101,14 +2102,14 @@ RectTransform:
   m_GameObject: {fileID: 818994430}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.7043, y: 2.7043, z: 2.7043}
+  m_LocalScale: {x: 15.071042, y: 7.6095023, z: 7.0458355}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1588408082}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -0.000051754, y: -43}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &921420028
@@ -3431,7 +3432,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.000013351, y: -185}
+  m_AnchoredPosition: {x: -0.000013351, y: -252}
   m_SizeDelta: {x: 213.3342, y: 90.3517}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1452203336
@@ -3468,7 +3469,11 @@ MonoBehaviour:
   tipeObjek: 1
   namaObjek: Materi 2
   halamanMateri:
-  - {fileID: 21300000, guid: 1643103d24133a249abec747744b8fc4, type: 3}
+  - {fileID: 21300000, guid: 27b8dcee2045fe74b88830596700b866, type: 3}
+  - {fileID: 21300000, guid: 74b80a331717e904ebf5ec782712e423, type: 3}
+  - {fileID: 21300000, guid: 186cf7498ac2c9848900dad2b4acc160, type: 3}
+  - {fileID: 21300000, guid: da1a66f4ae09ec44bb725cfc551aae76, type: 3}
+  - {fileID: 21300000, guid: 6810b741fdf7412488cb54444ca138b0, type: 3}
   sudahSelesai: 0
 --- !u!65 &1452203338
 BoxCollider:
@@ -3912,11 +3917,11 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 818994433}
   - {fileID: 1447350762}
   - {fileID: 2086450869}
   - {fileID: 2055551640}
   - {fileID: 323929124}
-  - {fileID: 818994433}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -4589,7 +4594,12 @@ MonoBehaviour:
   tipeObjek: 1
   namaObjek: Materi 2
   halamanMateri:
-  - {fileID: 21300000, guid: 1643103d24133a249abec747744b8fc4, type: 3}
+  - {fileID: 21300000, guid: f867145441201f741bd7051700a60f31, type: 3}
+  - {fileID: 21300000, guid: b6cff15134aa58e4ea4b2a81a2775611, type: 3}
+  - {fileID: 21300000, guid: 3b5712c7b1a48a242ab3c5ab80948f54, type: 3}
+  - {fileID: 21300000, guid: 731d1fb74e21c654d8db74448a4df18b, type: 3}
+  - {fileID: 21300000, guid: ab229ba9565c3f44d8750941e9638318, type: 3}
+  - {fileID: 21300000, guid: 00a00b52a28280347a295bcbf4ed74b4, type: 3}
   sudahSelesai: 0
 --- !u!65 &1984677545
 BoxCollider:
@@ -4833,7 +4843,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -310, y: -69.43381}
+  m_AnchoredPosition: {x: -420, y: -252}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2086450867
@@ -4920,6 +4930,7 @@ MonoBehaviour:
   txt_skorGlobal: {fileID: 1053313065}
   screenChanger: {fileID: 10167763}
   namaSceneBerikutnya: fikx_win
+  namaSceneKalah: fikx_lose
 --- !u!4 &2138274645
 Transform:
   m_ObjectHideFlags: 0

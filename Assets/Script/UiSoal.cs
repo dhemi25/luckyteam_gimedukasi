@@ -16,9 +16,12 @@ public class UiSoal : MonoBehaviour
     [Header("Data Soal")]
     public List<DataSoal> listSoal;
 
+    [Header("Aturan Kelulusan")]
+    public int minimalBenarUntukLulus = 2; // <-- TAMBAHAN: Atur minimum jawaban benar di Inspector
+
     private int currentSoalIndex;
-    private int skorBenar; // Ganti nama dari skorKuis agar lebih jelas
-    private int skorSalah; // Variabel baru untuk menghitung jawaban salah
+    private int skorBenar;
+    private int skorSalah;
 
     void Start()
     {
@@ -34,9 +37,8 @@ public class UiSoal : MonoBehaviour
     {
         currentSoalIndex = 0;
         skorBenar = 0;
-        skorSalah = 0; // Reset skor salah
+        skorSalah = 0;
 
-        // Tampilkan notif awal dengan skor 0
         UpdateNotif("Pilih jawaban yang benar!", Color.white);
 
         if (listSoal != null && listSoal.Count > 0)
@@ -45,7 +47,6 @@ public class UiSoal : MonoBehaviour
         }
     }
 
-    // Fungsi pembantu untuk memperbarui teks notif dengan skor
     void UpdateNotif(string status, Color warna)
     {
         if (txt_notif != null)
@@ -85,15 +86,14 @@ public class UiSoal : MonoBehaviour
         else
         {
             SetUpTextSoal();
-            // Kembalikan notif ke pesan instruksi saat soal baru muncul
             UpdateNotif("Pilih jawaban yang benar!", Color.white);
         }
     }
 
     void SelesaikanQuiz()
     {
-        // Cek jika benar semua
-        if (skorBenar == listSoal.Count)
+        // <-- MODIFIKASI: Cek apakah skor mencapai minimum
+        if (skorBenar >= minimalBenarUntukLulus)
         {
             if (player.objekInteraksiSaatIni != null && !player.objekInteraksiSaatIni.sudahSelesai)
             {
@@ -101,28 +101,28 @@ public class UiSoal : MonoBehaviour
 
                 if (GameManager.instance != null)
                 {
-                    GameManager.instance.TambahSoalSelesai(); // <- Diubah ke fungsi baru
+                    // Menambahkan progres soal. Jika progres terpenuhi, GameManager memanggil scene WIN
+                    GameManager.instance.TambahSoalSelesai();
                 }
 
-                // Hancurkan objek 3D
                 Destroy(player.objekInteraksiSaatIni.gameObject);
-
-                // TAMBAHAN PENTING: Kosongkan variabel agar player tidak 'teringat' objek lama
                 player.objekInteraksiSaatIni = null;
             }
         }
+        else
+        {
+            // <-- TAMBAHAN: Jika gagal memenuhi target, panggil scene LOSE
+            if (GameManager.instance != null)
+            {
+                GameManager.instance.LevelKalah();
+            }
+        }
 
-        // Tutup canvas
         if (canvasInteract != null) canvasInteract.SetActive(false);
-
-        // Izinkan jalan kembali
         player.can_move = true;
-
-        // TAMBAHAN PENTING: Panggil fungsi ini untuk memastikan UI "Press E" dimatikan
         player.SetOnInteractionArea(false, null);
     }
 
-    // ... (Fungsi SetUpTextSoal biarkan tetap sama seperti sebelumnya)
     public void SetUpTextSoal()
     {
         DataSoal soal = listSoal[currentSoalIndex];

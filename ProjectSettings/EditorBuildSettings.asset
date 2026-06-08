@@ -30,6 +30,9 @@ EditorBuildSettings:
     path: Assets/Scenes/fikx_win.unity
     guid: 7d020b25eb738164e831d4efe29c1686
   - enabled: 1
+    path: Assets/Scenes/fikx_lose.unity
+    guid: 46df5c6293867034286011eceb179eee
+  - enabled: 1
     path: Assets/Scenes/fikx_how_to_play.unity
     guid: f643d01c986fe104f9c55799a23076cb
   m_configObjects:
