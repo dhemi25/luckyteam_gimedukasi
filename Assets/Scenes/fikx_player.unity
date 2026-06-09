@@ -2320,7 +2320,7 @@ Transform:
   m_GameObject: {fileID: 943060954}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: 0, y: 0.92, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2425,13 +2425,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 40
+  m_fontSizeBase: 40
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 256
   m_textAlignment: 65535
@@ -2494,7 +2494,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 286, y: -129}
+  m_AnchoredPosition: {x: 183, y: -85}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1135603052
@@ -2926,7 +2926,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 02ba308bed5cd924d888de16aa13d884, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.3
+      value: 0.46
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 02ba308bed5cd924d888de16aa13d884, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3078,7 +3078,7 @@ Transform:
   m_GameObject: {fileID: 1288503067}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.23, z: 0}
   m_LocalScale: {x: 50, y: 0.1, z: 50}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3423,15 +3423,15 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1452203336}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.8741175, z: -0, w: 0.4857146}
-  m_LocalPosition: {x: 4.62, y: 2.25, z: 33.2}
+  m_LocalRotation: {x: 0.09206587, y: -0.886435, z: 0.14582574, w: 0.4295252}
+  m_LocalPosition: {x: 4.06, y: 3.2, z: 37.06}
   m_LocalScale: {x: 0.82, y: 0.82, z: 0.82}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 482615331}
   - {fileID: 2014594774}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: -121.881, z: 0}
+  m_LocalEulerAnglesHint: {x: 19.732, y: -128.697, z: -2.311}
 --- !u!1 &1503089419
 GameObject:
   m_ObjectHideFlags: 0
@@ -4349,7 +4349,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Interact
   player: {fileID: 943060955}
   tipeObjek: 1
-  namaObjek: Materi 2
+  namaObjek: Materi 1
   halamanMateri:
   - {fileID: 21300000, guid: f867145441201f741bd7051700a60f31, type: 3}
   - {fileID: 21300000, guid: b6cff15134aa58e4ea4b2a81a2775611, type: 3}

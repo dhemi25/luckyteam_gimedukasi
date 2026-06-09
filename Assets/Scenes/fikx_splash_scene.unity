@@ -200,7 +200,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: baddde1204462f341b5433a7d8536f8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::splashvideocontroler
-  videoPlayer: {fileID: 0}
+  videoPlayer: {fileID: 536047696}
   jedaAwal: 0.5
   jedaAkhir: 2
   namaSceneTujuan: fikx_menu
