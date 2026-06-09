@@ -1,121 +1,151 @@
 using UnityEngine;
-using TMPro; // Diperlukan untuk TextMeshPro
+using TMPro; // Diperlukan untuk menampilkan teks menggunakan TextMeshPro
 using System.Collections;
 
 public class PlayerContrrollerAdventure : MonoBehaviour
 {
-    public float speed = 5f;
-    public Transform cameraTransform;
-    CharacterController controller;
+    [Header("Pengaturan Pemain")]
+    public float speed = 5f; // Kecepatan jalan karakter
+    public Transform cameraTransform; // Posisi kamera, agar jalan karakter bisa menyesuaikan arah kamera
+    CharacterController controller; // Komponen bawaan Unity untuk menggerakkan karakter
+    public Animator playerAnimator; // Untuk mengatur animasi jalan/diam
+    public bool can_move = true; // Tombol on/off apakah pemain boleh bergerak atau tidak
 
-    private bool onInteractArea;
-    [HideInInspector] public Interact objekInteraksiSaatIni;
+    [Header("Sistem Interaksi")]
+    private bool onInteractArea; // Penanda apakah pemain sedang berada di dekat objek yang bisa diinteraksi
+    [HideInInspector] public Interact objekInteraksiSaatIni; // Menyimpan data objek apa yang sedang ada di depan pemain
 
     [Header("UI Interaksi (Tekan E)")]
-    public GameObject objInfoInteract; // UI "Press E"
-    public TextMeshProUGUI txt_namaObjek; // Teks untuk menampilkan nama objek
+    public GameObject objInfoInteract; // Munculin tulisan "Tekan E"
+    public TextMeshProUGUI txt_namaObjek; // Munculin nama objeknya (contoh: "Papan Tulis")
 
     [Header("UI Peringatan")]
-    public TextMeshProUGUI txt_peringatan; // Teks "Selesaikan materi dulu!"
+    public TextMeshProUGUI txt_peringatan; // Tulisan merah/peringatan (contoh: "Selesaikan materi dulu!")
 
-    [Header("Canvas & System")]
-    public GameObject canvasSoal;
-    public UiSoal uiSoal;
-    public GameObject canvasMateri; // Canvas baru untuk materi
-    public UiMateri uiMateri; // Script baru untuk materi
-
-    public Animator playerAnimator;
-    public bool can_move = true;
+    [Header("Canvas & System (Tampilan Layar)")]
+    public GameObject canvasSoal; // Layar untuk kuis/soal
+    public UiSoal uiSoal; // Script pengatur kuis
+    public GameObject canvasMateri; // Layar untuk baca materi
+    public UiMateri uiMateri; // Script pengatur materi
 
     void Start()
     {
+        // Mengambil komponen CharacterController yang menempel pada pemain
         controller = GetComponent<CharacterController>();
 
-        // PERBAIKAN 1: Memastikan semua canvas mati saat game baru dimulai
+        // PERSIAPAN AWAL: Matikan semua tampilan UI (layar) saat game baru dimulai
         if (canvasSoal != null) canvasSoal.SetActive(false);
         if (canvasMateri != null) canvasMateri.SetActive(false);
-
         if (objInfoInteract != null) objInfoInteract.SetActive(false);
         if (txt_peringatan != null) txt_peringatan.gameObject.SetActive(false);
 
-        // Kosongkan teks nama objek di awal game
+        // Kosongkan tulisan nama objek di awal game
         if (txt_namaObjek != null) txt_namaObjek.text = "";
     }
 
     void Update()
     {
+        // Kalau pemain lagi nggak boleh gerak (misal lagi baca materi/kuis), hentikan kode di bawahnya
         if (!can_move) return;
 
+        // --- PENJELASAN: INPUT PEMAIN ---
+        // GetAxis menghasilkan angka dari -1 sampai 1.
+        // Tekan 'A' (kiri) = -1. Tekan 'D' (kanan) = 1. Dilepas = 0.
+        // Tekan 'S' (mundur) = -1. Tekan 'W' (maju) = 1. Dilepas = 0.
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
 
+        // --- PENJELASAN: MATEMATIKA ARAH (VECTOR) ---
+        // Kita ingin pemain maju ke arah mana kamera sedang melihat.
+        // cameraTransform.forward mengambil arah "depan" dari kamera.
+        // cameraTransform.right mengambil arah "kanan" dari kamera.
         Vector3 forward = cameraTransform.forward;
         Vector3 right = cameraTransform.right;
+
+        // MENGAPA Y = 0? 
+        // Sumbu Y adalah Atas/Bawah. Jika kamera menunduk, kita tidak mau karakter ikut 
+        // tembus ke dalam tanah. Jadi kita paksa sumbu atas/bawah (Y) menjadi 0.
         forward.y = 0; right.y = 0;
 
+        // Menggabungkan arah berdasarkan tombol yang ditekan (h dan v).
         Vector3 moveDirection = forward * v + right * h;
+
+        // --- PENJELASAN: NORMALIZED & TIME.DELTATIME ---
+        // .normalized: Mencegah pemain jalan lebih cepat saat bergerak diagonal (tekan W dan D bersamaan).
+        // Time.deltaTime: Membuat kecepatan jalan sama rata di semua komputer (baik yang spek dewa maupun kentang).
         controller.Move(moveDirection.normalized * speed * Time.deltaTime);
 
+        // --- PENJELASAN: ANIMASI DAN ARAH BADAN ---
+        // Vector3.zero artinya (0,0,0) atau pemain sedang diam.
         if (moveDirection != Vector3.zero)
         {
+            // transform.forward mengubah arah dada karakter agar menghadap ke arah dia berjalan.
             transform.forward = moveDirection;
-            playerAnimator.enabled = true;
+            playerAnimator.enabled = true; // Nyalakan animasi jalan
         }
         else
         {
-            playerAnimator.enabled = false;
+            playerAnimator.enabled = false; // Matikan animasi jalan (kembali berdiri diam)
         }
 
+        // --- PENJELASAN: LOGIKA INTERAKSI ---
+        // Input.GetKeyDown berarti aksi dieksekusi 1x persis saat tombol 'E' ditekan, tidak akan berulang walau ditahan.
         if (onInteractArea && Input.GetKeyDown(KeyCode.E))
         {
+            // Kalau nggak ada objeknya, batalin
             if (objekInteraksiSaatIni == null) return;
 
-            // CEK TIPE OBJEK
+            // CEK TIPE OBJEK: Apakah ini kuis atau materi?
             if (objekInteraksiSaatIni.tipeObjek == TipeInteract.Soal)
             {
+                // Mengambil data dari GameManager tanpa harus memasukkannya manual ke script ini (Pola Singleton).
                 if (!GameManager.instance.ApakahMateriSudahCukup())
                 {
+                    // Memanggil fungsi waktu (Coroutine) untuk memunculkan peringatan
                     StartCoroutine(TampilkanPeringatan("Baca semua materi terlebih dahulu!"));
                     return;
                 }
 
+                // Kalau materi udah cukup, buka layar kuis
                 canvasSoal.SetActive(true);
                 uiSoal.MulaiQuiz();
             }
             else if (objekInteraksiSaatIni.tipeObjek == TipeInteract.Materi)
             {
+                // Kalau tipenya materi, buka layar materi
                 canvasMateri.SetActive(true);
                 uiMateri.BukaMateri(objekInteraksiSaatIni);
             }
 
+            // Kunci pergerakan pemain (biar nggak bisa jalan pas layar kuis/materi terbuka)
             can_move = false;
 
-            // PERBAIKAN: Cukup matikan visual UI-nya saja secara manual, 
-            // JANGAN hapus datanya dengan SetOnInteractionArea(false, null)
+            // Sembunyikan tulisan "Tekan E" dan "Nama Objek" saat pemain lagi buka UI
             if (objInfoInteract != null) objInfoInteract.SetActive(false);
             if (txt_namaObjek != null) txt_namaObjek.gameObject.SetActive(false);
         }
     }
 
-    // PERBAIKAN 2: Logika penanganan teks nama objek saat keluar/masuk area collider
+    // --- FUNGSI TRIGGER AREA INTERAKSI ---
+    // Dipanggil saat pemain menabrak (masuk/keluar) area objek.
     public void SetOnInteractionArea(bool isInteract, Interact objInteract)
     {
         onInteractArea = isInteract;
         objekInteraksiSaatIni = objInteract;
 
-        // Jika perintahnya adalah mematikan interaksi ATAU datanya kosong, paksa ke kondisi false
+        // Pencegahan error: Kalau disuruh matiin interaksi atau objeknya hilang, pastikan statusnya false
         if (!isInteract || objInteract == null)
         {
             isInteract = false;
         }
 
-        // Tampilkan/sembunyikan UI "Press E"
+        // Tampilkan atau sembunyikan kotak tulisan "Tekan E"
         if (objInfoInteract != null)
         {
             objInfoInteract.SetActive(isInteract);
         }
 
-        // Atur teks nama objek berdasarkan kondisi interaksi
+        // Atur kemunculan tulisan Nama Objek
         if (txt_namaObjek != null)
         {
             if (isInteract && objInteract != null)
@@ -125,20 +155,26 @@ public class PlayerContrrollerAdventure : MonoBehaviour
             }
             else
             {
-                txt_namaObjek.text = ""; // Kosongkan text agar tidak membekas di layar
-                txt_namaObjek.gameObject.SetActive(false); // Sembunyikan komponen teks
+                txt_namaObjek.text = "";
+                txt_namaObjek.gameObject.SetActive(false);
             }
         }
     }
 
+    // --- PENJELASAN: IENUMERATOR (COROUTINE) ---
+    // IEnumerator adalah fungsi khusus untuk membuat sistem Timer tanpa membekukan keseluruhan game.
     IEnumerator TampilkanPeringatan(string pesan)
     {
         if (txt_peringatan != null)
         {
-            txt_peringatan.text = pesan;
-            txt_peringatan.gameObject.SetActive(true);
+            txt_peringatan.text = pesan; // Isi teks peringatannya apa
+            txt_peringatan.gameObject.SetActive(true); // Munculin di layar
+
+            // Perintah ini memberitahu Unity: "Tahan fungsi ini di sini, biarkan game tetap berjalan normal, 
+            // lalu lanjutkan sisa kode di bawah ini setelah 2.5 detik berlalu."
             yield return new WaitForSeconds(2.5f);
-            txt_peringatan.gameObject.SetActive(false);
+
+            txt_peringatan.gameObject.SetActive(false); // Sembunyikan lagi setelah 2.5 detik
         }
     }
 }
